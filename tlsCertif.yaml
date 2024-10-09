@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: myapp-secret-tls
-  namespace: default
-data:
-  tls.crt: base64encodedecert
-  tls.key: base64encodedkey
-type: kubernetes.io/tls
