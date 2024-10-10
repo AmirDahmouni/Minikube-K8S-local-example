@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: my-app
+        image: 12851043/weather_api_app:5.0.10
         ports:
         - containerPort: 3000
 
