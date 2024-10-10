@@ -1,6 +1,6 @@
 architecture: replicaset
-replicacount: 3
+replicacount: 2
 persistence:
-   storageClass: "Linode-block-storage"
+   storageClass: local-storage
 auth:
    rootPassword: secret-root-pwd

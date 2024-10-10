@@ -1,9 +1,36 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: storage-class
-provisioner: kubernetes.io/aws-ebs
-parameters:
-  type: io1
-  iopsPerGB: "10"
-  fsType: ext4
+  name: local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: local-storage  # Corrected storageClassName
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongodb-pv
+spec:
+  capacity:
+    storage: 2Gi  # Updated to match the PVC request
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain  # Recommended to set reclaim policy
+  storageClassName: local-storage  # Added storageClassName for binding
+  hostPath:
+    path: /mnt/data  # Define the path on the host where the data will be stored
